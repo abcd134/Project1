@@ -11,22 +11,64 @@ namespace Project1
         static void Main(string[] args)
         {
             /*this code will initiate 10000 race
-                Each time a player wins - his win count is raised by one and the total time he took to win the race is added and averaged at the end of the code
+                Create a list to store all of the winning player and their winning time
             */
-            int[] winCount = new int[4];
-            int[] timeCount = new int[4];
+            List<int[]> dataset= new List<int[]>();
 
             for (int x = 0; x < 10000; x++)
             {
                 int[] a = engageRace();
-                winCount[a[0]] += 1;
-                timeCount[a[0]] += a[1];
+                dataset.Add(a);
             }
 
-            for (int x = 0; x < winCount.Length; x++)
+            int[][] winnerAndTime = dataset.ToArray(); // convert the list in to a 2 dimensional array 
+                                                       //data format: [x][0] - winning player [x][1] - winning player's time
+            // sample code uses
+
+
+            /*
+             * This will show the user each winner and their times 
+             */
+
+            for (int x = 0; x < winnerAndTime.Length; x++)
             {
-                Console.WriteLine("Player " + x + " has won " + winCount[x] + " times" + " and did it in an average of " + timeCount[x]/winCount[x] + "sec");
+                Console.WriteLine("Player " + winnerAndTime[x][0] + " won at " + winnerAndTime[x][1] + " sec");
             }
+
+            /*
+             * This code will count how many times each player wins - winnerCount will have a tally of how many times each player won
+             */
+            int[] winnerCount = new int[1];
+            for (int x = 0; x < winnerAndTime.Length; x++)
+            {
+                winnerCount[winnerAndTime[x][0]] += 1; //add 1 everytime a winner wins
+            }
+
+            //creates 3 lists seperating out each of the player's time - data is ordered based on recent wins - being recent wins is the last data
+            List<int> player0Times = new List<int>();
+            List<int> player1Times = new List<int>();
+            List<int> player2Times = new List<int>();
+            List<int> player3Times = new List<int>();
+
+            for (int x = 0; x < winnerAndTime.Length; x++)
+            {
+                switch (winnerAndTime[x][0])
+                {
+                    case 0:
+                        player0Times.Add(winnerAndTime[x][1]);
+                        break;
+                    case 1:
+                        player1Times.Add(winnerAndTime[x][1]);
+                        break;
+                    case 2:
+                        player2Times.Add(winnerAndTime[x][1]);
+                        break;
+                    case 3:
+                        player3Times.Add(winnerAndTime[x][1]);
+                        break;
+                }
+            }
+
             Console.ReadLine();
         }
 
@@ -60,7 +102,6 @@ namespace Project1
             }
 
             winner = checkWinner(players); //store the winner here
-            Console.WriteLine("The winner is: Player " + winner + " and did it in " + timeElapsed + " seconds"); 
 
             //preparing data return
             dataToReturn[0] = winner; 
