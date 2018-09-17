@@ -36,7 +36,7 @@ namespace Project1
             for (int x = 0; x < winnerAndTime.Length; x++)
             {
                 Console.WriteLine("Player " + winnerAndTime[x][0] + " won at " + winnerAndTime[x][1] + " sec");
-            }
+            } 
 
             /*
              * This code will count how many times each player wins - winnerCount will have a tally of how many times each player won
